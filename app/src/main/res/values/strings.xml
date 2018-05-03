@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Wine Scanner</string>
+    <string name="take_picture">Take Picture</string>
+    <string name="review">Review</string>
+    <string name="picture_compare">Take Pictures</string>
+    <string name="barcode_compare">Scan Barcodes</string>
+    <string name="intro_desc">Compare wines by taking a picture of each one you are interested in. Press the button below to begin.</string>
+
+    <string name="scan">Scan</string>
+    <string name="go_back">Go Back</string>
+
+    <string name="title_activity_review_selection_screen">ReviewSelectionScreen</string>
+    <string name="wine_picture">Wine Picture</string>
+    <string name="wine_title">Josh Wineries Cabernet Sauvignon 2018</string>
+    <string name="wine_description">Some description of a wine that resembles a faint aftertaste or borgoneise, but not so subtle either. A truly magnificant wine</string>
+    <string name="details">Details</string>
+    <string name="choose">Choose</string>
+    <string name="see_reviews">See Reviews</string>
+    <string name="wine_source">via winecritic.com</string>
+    <string name="wine_points">84 pts</string>
+    <string name="ratings_count">(15)</string>
+    <string name="more">More</string>
+</resources>
