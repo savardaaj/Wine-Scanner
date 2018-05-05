@@ -8,16 +8,6 @@
     tools:context=".ReviewSelectionScreen"
     tools:layout_editor_absoluteY="81dp">
 
-    <include
-        android:id="@+id/wineCardSlot"
-        layout="@layout/wine_card_component"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/toolbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
