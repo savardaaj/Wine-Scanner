@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("1", "Inside main oncreate");
+        Log.d("********", "Inside main oncreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Called when user taps the Compare Wines button
     public void scanBarcodes(View view) {
-        Log.d("2", "Inside main scanBarcodes");
+        Log.d("********", "Inside main scanBarcodes");
         //do something in response to button
         Intent intent = new Intent(this, BarcodeScanner.class);
         startActivity(intent);

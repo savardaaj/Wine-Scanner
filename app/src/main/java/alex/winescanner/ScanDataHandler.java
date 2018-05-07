@@ -2,6 +2,16 @@ package alex.winescanner;
 
 import android.util.Log;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -9,45 +19,42 @@ public class ScanDataHandler {
 
     //call UPC Item DB for UPC Codes: http://www.upcitemdb.com/upc/31259001043
     //Wine Bottles require a UPC Code!
-    JSONRequestHandler jsonRH;
-    JSONObject jsonResult;
-    String upcURL;
-    Wine wine;
-    int wineCount;
+    private JSONRequestHandler jsonRH;
+    private JSONObject jsonResult;
+    private String upcURL = "";
+    private Wine wine;
+    private boolean notPopulated = true;
 
     public ScanDataHandler() {
-        Log.d("ScanDataHandler", "");
+        Log.d("********ScanDataHandler", "Inside ScanDataHandler");
 
         wine = new Wine();
-        wineCount = 0;
+        jsonResult = new JSONObject();
+        jsonRH = new JSONRequestHandler();
     }
 
-    public void sendRequest(String upcID) {
-        Log.d("sendRequest", "");
+    public void sendRequest(RequestQueue queue, String upcID) {
+        Log.d("********sendRequest", "Entering sendRequest: " + upcID);
         try {
-            //upcURL = "http://www.upcitemdb.com/upc/" + upcID;
+            JSONController jsonC = new JSONController();
+            jsonC.fetchData(queue, new JSONController.DataCallback() {
+                @Override
+                public void onSuccess(JSONObject result) {
+                    try {
+                        jsonResult = result;
+                        //populateWineObj(wine, jsonResult);
+                        Log.d("*****Onsuccessresult", "result: " + result);
+                    }
+                    catch (Exception e) {
+                        Log.e("*****Error", "error: " + e.getStackTrace().toString());
+                    }
 
-            //For testing only
-            upcURL = "http://www.upcitemdb.com/upc/31259001043";
-            jsonResult = jsonRH.processUPCID(upcURL);
-
-            populateWineObj(wine, jsonResult);
-            Log.d("wineTitle", wine.getTitle());
-
-            //TODO: take title and do a web scrape search for ratings/reviews on wine searcher or total wine
-            //searchWineSearcher();
-            //searchTotalWine();
-            //https://www.wine-searcher.com/find/Joseph+Carr+Josh+Cellars+Rose+Wine,+750+mL
-            //do brand + title?. works for the josh wine
-
-            //TODO: need to complete website to register for snooth
-            //http://api.snooth.com/wines/?akey=<your api key>&ip=66.28.234.115&q=napa+cabernet&xp=30
-
-            //for now, just use data from upcdb
+                }
+            });
 
         }
         catch (Exception e) {
-
+            Log.d("*****Exception", "Error: " + e.getMessage());
         }
 
     }
@@ -56,39 +63,24 @@ public class ScanDataHandler {
         return wine;
     }
 
-    public int getWineCount() {
-        return wineCount;
-    }
-
-    private void populateWineObj(Wine wine, JSONObject jsonResult) {
-        Log.d("populateWineObj", "");
+    public Wine populateWineObj(Wine wine, JsonObject jsonResult) {
+        Log.d("populateWineObj", "msg" + jsonResult);
         try {
 
-            wine.setTitle(jsonResult.getString("title"));
-            wine.setDescription(jsonResult.getString("description"));
-            wine.setUpc(jsonResult.getString("upc"));
-            wine.setBrand(jsonResult.getString("brand"));
-            wine.setColor(jsonResult.getString("color"));
-            wine.setLowest_recorded_price(Double.parseDouble(jsonResult.getString("lowest_recorded_price")));
-            wine.setHighest_recorded_price(Double.parseDouble(jsonResult.getString("highest_recorded_price")));
-
-            //Returns an array
-            JSONArray arr = jsonResult.getJSONArray("images");
-
-            int len = arr.length();
-            String[] jsonImages = new String[len];
-            if (len > 0) {
-                for (int i = 0; i < len; i++) {
-                    jsonImages[i] = arr.getString(i);
-                }
+            Gson gson = new Gson();
+            //this populates teh model with header info and a list of wine object
+            JsonResponseModel jsonModel = gson.fromJson(jsonResult, JsonResponseModel.class);
+            if(jsonModel.items.get(0) != null) {
+                wine = jsonModel.items.get(0);
             }
-
-            wine.setImages(jsonImages);
-            wineCount++;
+            else {
+                Log.d("*****Empty", "Wine is null");
+            }
         }
         catch (Exception e) {
-
+            Log.d("*****Error", "Error" + e.getMessage());
         }
+        return wine;
     }
 
 }

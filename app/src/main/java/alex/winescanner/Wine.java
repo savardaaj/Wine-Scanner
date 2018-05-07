@@ -4,20 +4,29 @@ import java.io.Serializable;
 
 public class Wine implements Serializable{
 
+    String ean;
     String description;
     String title;
-    String upc;
-    String brand;
+    private String upc;
+    private String brand;
     String color;
-    double lowest_recorded_price;
-    double highest_recorded_price;
-    String[] images;
+    String model;
+    String size;
+    String dimension;
+    String weight;
+    String currency;
+    private double lowest_recorded_price;
+    private double highest_recorded_price;
+    private String[] images;
+    private String source;
+    private int points;
+    private int ratingsCount;
 
-    public Wine() {
+    Wine() {
 
     }
 
-    public Wine(String description, String title, String upc, String brand, String color, double lowest_recorded_price, double highest_recorded_price, String[] images) {
+    Wine(String description, String title, String upc, String brand, String color, double lowest_recorded_price, double highest_recorded_price, String[] images) {
         this.description = description;
         this.title = title;
         this.upc = upc;
@@ -26,6 +35,9 @@ public class Wine implements Serializable{
         this.lowest_recorded_price = lowest_recorded_price;
         this.highest_recorded_price = highest_recorded_price;
         this.images = images;
+        this.source = "";
+        this.points = 0;
+        this.ratingsCount = 1;
     }
 
     public String getDescription() {
@@ -90,5 +102,29 @@ public class Wine implements Serializable{
 
     public void setImages(String[] images) {
         this.images = images;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public int getRatingsCount() {
+        return ratingsCount;
+    }
+
+    public void setRatingsCount(int ratingsCount) {
+        this.ratingsCount = ratingsCount;
     }
 }

@@ -2,6 +2,7 @@ package alex.winescanner;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Rating;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,24 +28,23 @@ public class ReviewSelectionScreen extends AppCompatActivity {
     private Button btnMore;
     private Wine wine;
     private ArrayList<Wine> wineList;
-    private int wineCount;
 
     private ViewGroup mConstraintLayout;
 
     private void init() {
-        Log.d("3", "Inside reviewselectionscreen init");
-        wineCount = 0;
-        wineList = new ArrayList<>();
+        Log.d("********", "Inside reviewselectionscreen init");
+        wineList = new ArrayList<Wine>();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("4", "Inside reviewselectionscreen onCreate");
+        Log.d("********", "Inside reviewselectionscreen onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review_selection_screen);
 
         btnMore = (Button) findViewById(R.id.btnMore);
 
+        //if moved lower causes a null pointer exception
         btnMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,69 +55,51 @@ public class ReviewSelectionScreen extends AppCompatActivity {
         mConstraintLayout = (ViewGroup) findViewById(R.id.layoutReviewMain);
 
         init();
-
         getWineDataFromIntent();
 
-        addLayout();
-
-        //ConstraintLayout currentLayout = findViewById(R.id.layoutReviewMain);
-
-        //createWineCard(currentLayout.getContext());
-
-//        if(wineList.size() > 0) {
-//            for(int i = 0; i < wineCount; i++) {
-//                wine = wineList.get(i);
-//                createWineCard(currentLayout.getContext());
-//            }
-//        }
-//        else {
-//            Log.d("wineListEmpty", "Wine List is empty");
-//        }
-
+        Log.d("*********", "WineInfo: " + wineList.size());
+        for(int i = 0; i < wineList.size(); i++) {
+            wine = wineList.get(i);
+            createWineCard(wineList.get(i));
+        }
     }
 
     private void getWineDataFromIntent() {
-        Log.d("5", "Inside reviewselectionscreen getWineDataFromIntent");
+        Log.d("********", "Inside reviewselectionscreen getWineDataFromIntent");
         Intent intent = getIntent();
         wineList = (ArrayList<Wine>) intent.getSerializableExtra("WineList");
-        wineCount = intent.getIntExtra("wineCount", 0);
+        wine = (Wine) intent.getSerializableExtra("Wine");
+        Log.d("*****Data", "wineListafterintent: " + wineList.get(0));
+        Log.d("*****Data", "wineafterintent: " + wine.getTitle());
     }
 
-    private void createWineCard(Context context) {
-        Log.d("6", "Inside reviewselectionscreen createWineCard");
-        //LayoutInflater li = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        WineCardComponent wcc = new WineCardComponent(context);
-
-        //TODO: Create wine_component. Populate with wine data
-        //LayoutInflater li = getLayoutInflater();
-        //View v = li.inflate(R.layout.wine_card_component, null);
-
-        //View customView = v.findViewById(R.id.wine_card_component);
-        //customView.findViewById(R.id.tvWineName).getContext().
-
-        //Populate winecard with data
-        //TextView tv = (TextView) v.findViewById(R.id.tvWineName);
-        //tv.setText(wine.getTitle());
-
-       // ViewGroup viewGroup = (ViewGroup) findViewById(R.id.layoutReviewMain);
-        //viewGroup.addView(v, 0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
-    }
-
-    private void addLayout() {
-        Log.d("8", "inside reviewselectionscreen addlayout");
-        View layout2 = LayoutInflater.from(this).inflate(R.layout.wine_card_component, mConstraintLayout, false);
+    private void createWineCard(Wine wine) {
+        Log.d("********", "inside reviewselectionscreen CreateWineCard");
+        View combinedLayout = LayoutInflater.from(this).inflate(R.layout.wine_card_component, mConstraintLayout, false);
 
         //Create all components of imported component
-        TextView tvWineName = (TextView) layout2.findViewById(R.id.tvWineName);
+        TextView tvWineName = (TextView) combinedLayout.findViewById(R.id.tvWineName);
+        ImageView imageView = (ImageView) combinedLayout.findViewById(R.id.ivWine_Picture);
+        RatingBar ratingBar = (RatingBar) combinedLayout.findViewById(R.id.ratingBar);
+        TextView tvWineDesc = (TextView) combinedLayout.findViewById(R.id.tvWineDesc);
+        TextView tvWineSource = (TextView) combinedLayout.findViewById(R.id.tvWineSource);
+        TextView tvWinePoints = (TextView) combinedLayout.findViewById(R.id.tvWinePoints);
+        TextView tvRatingsCount = (TextView) combinedLayout.findViewById(R.id.tvRatingsCount);
 
         //set values of imported components
-        tvWineName.setText(R.string.wine_title2);
+        tvWineName.setText(wine.getTitle());
+        Log.d("********", "inside reviewselectionscreen CreateWineCard" + wine.getTitle());
+        //imageView.setImageDrawable(wine.getImages());
+        //ratingBar.setNumStars(wine.getRating());
+        tvWineDesc.setText(wine.getDescription());
 
-        this.setContentView(layout2);
+        //tvWineSource.setText();
+        //tvWinePoints.setText();
+        //tvRatingsCount.setText();
+
+        this.setContentView(combinedLayout);
+
     }
-
 
 
 }
