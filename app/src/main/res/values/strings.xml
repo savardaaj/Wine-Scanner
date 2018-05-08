@@ -21,4 +21,11 @@
     <string name="wine_points">84 pts</string>
     <string name="ratings_count">(15)</string>
     <string name="more">More</string>
+
+    <string name="menu_scan1">Scan 1</string>
+    <string name="menu_scan_many">Scan Many</string>
+    <string name="menu_help">History</string>
+    <string name="menu_history">Help</string>
+    <string name="menu_settings">Settings</string>
+
 </resources>

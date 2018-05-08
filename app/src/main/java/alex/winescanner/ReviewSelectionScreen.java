@@ -12,6 +12,9 @@ import android.support.v7.widget.Toolbar;
 import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -61,6 +64,34 @@ public class ReviewSelectionScreen extends AppCompatActivity {
         for(int i = 0; i < wineList.size(); i++) {
             wine = wineList.get(i);
             createWineCard(wineList.get(i));
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_options_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menu_scan1:
+                //scanBarcode(this);
+                return true;
+            case R.id.menu_scan_many:
+                //scanBarcodes();
+                return true;
+            case R.id.menu_history:
+                //showHistory();
+                return true;
+            case R.id.menu_settings:
+                //showSettings();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
