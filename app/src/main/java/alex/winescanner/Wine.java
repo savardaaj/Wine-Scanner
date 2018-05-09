@@ -21,6 +21,7 @@ public class Wine implements Serializable{
     private String source;
     private int points;
     private int ratingsCount;
+    private String ratings;
 
     Wine() {
 
@@ -126,5 +127,16 @@ public class Wine implements Serializable{
 
     public void setRatingsCount(int ratingsCount) {
         this.ratingsCount = ratingsCount;
+    }
+
+    public String getRatings() {
+        return String.valueOf(ratings);
+    }
+
+    public void setRatings(String ratings) {
+        if(ratings == null) {
+            ratings = "0";
+        }
+        this.ratings = "(" + ratings + ")";
     }
 }

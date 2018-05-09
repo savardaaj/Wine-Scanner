@@ -98,7 +98,7 @@ public class BarcodeScanner extends AppCompatActivity {
         //integrator.setWide();  // Wide scanning rectangle, may work better for 1D barcodes
         //integrator.setResultDisplayDuration(1000);
         integrator.setCameraId(0);  // Use a specific camera of the device
-        integrator.setOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        //integrator.setOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
         integrator.initiateScan();
     }
 

@@ -174,10 +174,12 @@
             app:layout_constraintVertical_bias="0.84000003" />
 
         <TextView
-            android:id="@+id/tvRemove"
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_remove"
+            android:layout_width="15dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:clickable="true"
+            android:onClick="removeWineCard"
             android:text="X"
             android:textColor="@color/colorAccent"
             android:textSize="20sp"
@@ -193,16 +195,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/wine_points"
             android:textColor="@android:color/white"
             android:textSize="10sp"
-            app:layout_constraintBottom_toTopOf="@+id/tvWineDesc"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.57"
-            app:layout_constraintStart_toEndOf="@+id/ratingBar"
-            app:layout_constraintTop_toBottomOf="@+id/tvWineName"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintBottom_toBottomOf="@+id/view"
+            app:layout_constraintEnd_toEndOf="@+id/tvWine_Source"
+            app:layout_constraintHorizontal_bias="0.21"
+            app:layout_constraintStart_toStartOf="@+id/tvWine_Source"
+            app:layout_constraintTop_toTopOf="@+id/view"
+            app:layout_constraintVertical_bias="0.37" />
 
         <TextView
             android:id="@+id/tvRatingsCount"

@@ -23,14 +23,24 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewSelectionScreen extends AppCompatActivity {
 
+    //TODO: Change to be dynamic
+    private final String wine_searcher_url = "https://www.wine-searcher.com/find/joseph+carr+josh+cellars+rose/2016#t1";
+
     private Button btnMore;
     private Wine wine;
     private ArrayList<Wine> wineList;
+    //private TextView tv_remove;
 
     private ViewGroup mConstraintLayout;
 
@@ -59,12 +69,17 @@ public class ReviewSelectionScreen extends AppCompatActivity {
 
         init();
         getWineDataFromIntent();
+        getWineDataFromHTML();
 
         Log.d("*********", "WineInfo: " + wineList.size());
         for(int i = 0; i < wineList.size(); i++) {
             wine = wineList.get(i);
             createWineCard(wineList.get(i));
         }
+    }
+
+    private void createComponentListeners() {
+
     }
 
     @Override
@@ -104,6 +119,29 @@ public class ReviewSelectionScreen extends AppCompatActivity {
         Log.d("*****Data", "wineafterintent: " + wine.getTitle());
     }
 
+    private void getWineDataFromHTML() {
+        Log.d("*****", "inside getWineDataFromHTML: ");
+        try {
+            //File input = new File("/tmp/input.html");
+            Document doc = Jsoup.connect(wine_searcher_url).get();
+            Log.d("*****", "document: " + doc);
+
+            Element content = doc.getElementById("container");
+            Elements ratings = doc.select("[itemprop=ratingValue]");
+
+            for(Element rating : ratings) {
+                wine.setRatings(rating.text());
+                Log.d("*****", "Rating: " + rating.text());
+            }
+        }
+        catch(Exception e) {
+            Log.d("*****", "Error: " + e.getMessage());
+            //Log.d("*****", "msg: " + e.getStackTrace().toString());
+
+        }
+
+    }
+
     private void createWineCard(Wine wine) {
         Log.d("********", "inside reviewselectionscreen CreateWineCard");
         View combinedLayout = LayoutInflater.from(this).inflate(R.layout.wine_card_component, mConstraintLayout, false);
@@ -116,6 +154,7 @@ public class ReviewSelectionScreen extends AppCompatActivity {
         TextView tvWineSource = (TextView) combinedLayout.findViewById(R.id.tvWineSource);
         TextView tvWinePoints = (TextView) combinedLayout.findViewById(R.id.tvWinePoints);
         TextView tvRatingsCount = (TextView) combinedLayout.findViewById(R.id.tvRatingsCount);
+        TextView tv_remove = (TextView) combinedLayout.findViewById(R.id.tv_remove);
 
         //set values of imported components
         tvWineName.setText(wine.getTitle());
@@ -126,10 +165,14 @@ public class ReviewSelectionScreen extends AppCompatActivity {
 
         //tvWineSource.setText();
         //tvWinePoints.setText();
-        //tvRatingsCount.setText();
+        tvRatingsCount.setText(wine.getRatings());
 
         this.setContentView(combinedLayout);
+    }
 
+    //TODO: Remove card from view and arraylist
+    public void removeWineCard(View v) {
+        Log.d("*****", "Entered removeWineCard");
     }
 
 
