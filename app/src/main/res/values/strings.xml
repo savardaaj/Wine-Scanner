@@ -6,6 +6,9 @@
     <string name="barcode_compare">Scan Barcodes</string>
     <string name="intro_desc">Compare wines by taking a picture of each one you are interested in. Press the button below to begin.</string>
 
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
     <string name="scan">Scan</string>
     <string name="go_back">Go Back</string>
 
@@ -22,10 +25,24 @@
     <string name="ratings_count">(15)</string>
     <string name="more">More</string>
 
-    <string name="menu_scan1">Scan 1</string>
+    <string name="favorites">Favorites</string>
+
+    <string name="menu_scan1">Scan Single</string>
     <string name="menu_scan_many">Scan Many</string>
     <string name="menu_help">History</string>
     <string name="menu_history">Help</string>
     <string name="menu_settings">Settings</string>
+    <string name="title_activity_nav_drawer">NavDrawer</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example">Example action</string>
+
+    <string name="action_settings">Settings</string>
+
 
 </resources>

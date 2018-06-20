@@ -29,14 +29,16 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewSelectionScreen extends AppCompatActivity {
 
     //TODO: Change to be dynamic
-    private final String wine_searcher_url = "https://www.wine-searcher.com/find/joseph+carr+josh+cellars+rose/2016#t1";
+    //private final String wine_searcher_url = "https://www.wine-searcher.com/find/joseph+carr+josh+cellars+rose/2016#t1";
 
+    private final String wine_searcher_url = "https://www.wine.com/search/josh%20cellars%20rose/0";
     private Button btnMore;
     private Wine wine;
     private ArrayList<Wine> wineList;
@@ -121,24 +123,7 @@ public class ReviewSelectionScreen extends AppCompatActivity {
 
     private void getWineDataFromHTML() {
         Log.d("*****", "inside getWineDataFromHTML: ");
-        try {
-            //File input = new File("/tmp/input.html");
-            Document doc = Jsoup.connect(wine_searcher_url).get();
-            Log.d("*****", "document: " + doc);
-
-            Element content = doc.getElementById("container");
-            Elements ratings = doc.select("[itemprop=ratingValue]");
-
-            for(Element rating : ratings) {
-                wine.setRatings(rating.text());
-                Log.d("*****", "Rating: " + rating.text());
-            }
-        }
-        catch(Exception e) {
-            Log.d("*****", "Error: " + e.getMessage());
-            //Log.d("*****", "msg: " + e.getStackTrace().toString());
-
-        }
+        new WebScraper().execute(wine_searcher_url);
 
     }
 
